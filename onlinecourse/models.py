@@ -55,7 +55,7 @@ class Learner(models.Model):
 # Course model
 class Course(models.Model):
     name = models.CharField(null=False, max_length=30, default='online course')
-    image = models.ImageField(upload_to='static/uploads/course_img/')
+    image = models.ImageField(upload_to='uploads/course_img/')
     description = models.CharField(max_length=1000)
     pub_date = models.DateField(null=True)
     instructors = models.ManyToManyField(Instructor)
@@ -122,8 +122,8 @@ class Question(models.Model):
         else:
             return False
 
-        def __str__(self) -> str:
-            return self.question_text
+    def __str__(self) -> str:
+        return self.question_text
         
 
 
@@ -134,7 +134,7 @@ class Question(models.Model):
     # Indicate if this choice of the question is a correct one or not
     # Other fields and methods you would like to design
 class Choice(models.Model):
-    question = models.ManyToManyField(Question)
+    question = models.ForeignKey(Question, null=True, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     is_correct = models.BooleanField(default=False)
 
